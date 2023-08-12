@@ -9,16 +9,9 @@ import java.sql.Timestamp;
 
 @Getter
 @RequiredArgsConstructor
-@NoArgsConstructor
 public class InterviewDto {
-    private Long id;
-    private Long userId;
-    private Timestamp createdDate;
+    private final Long id;
+    private final Long userId;
+    private final Timestamp createdDate;
 
-    @Builder
-    public InterviewDto(Long id, Long userId, Timestamp createdDate) {
-        this.id = id;
-        this.userId = userId;
-        this.createdDate = createdDate;
-    }
 }

@@ -1,6 +1,7 @@
 package com.dongguk.ossdev.backend.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,4 +35,14 @@ public class Educational {
     @JoinColumn(name = "school_record_id")
     private SchoolRecord schoolRecord;
 
+    @Builder
+    public Educational(User user, int grade, String semester, String subject, String course, int rank, String detailAndSpecialty, SchoolRecord schoolRecord) {
+        this.grade = grade;
+        this.semester = semester;
+        this.subject = subject;
+        this.course = course;
+        this.rank = rank;
+        this.detailAndSpecialty = detailAndSpecialty;
+        this.schoolRecord = schoolRecord;
+    }
 }

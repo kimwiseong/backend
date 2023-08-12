@@ -1,28 +1,30 @@
 package com.dongguk.ossdev.backend.dto.request;
 
+import com.dongguk.ossdev.backend.domain.Career;
+import com.dongguk.ossdev.backend.domain.SchoolRecord;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class CareerRequestDto {
-    private String name;
-    private int grade;
-    private String specialtyOrInterest;
-    private String studentHope;
-    private String parentHope;
-    private String reason;
+    private final String name;
+    private final int grade;
+    private final String specialtyOrInterest;
+    private final String studentHope;
+    private final String parentHope;
+    private final String reason;
 
-    @Builder
-    public CareerRequestDto(String name, int grade, String specialtyOrInterest, String studentHope, String parentHope, String reason) {
-        this.name = name;
-        this.grade = grade;
-        this.specialtyOrInterest = specialtyOrInterest;
-        this.studentHope = studentHope;
-        this.parentHope = parentHope;
-        this.reason = reason;
+    public Career toEntity(SchoolRecord schoolRecord) {
+        return Career.builder()
+                .schoolRecord(schoolRecord)
+                .grade(grade)
+                .specialtyOrInterest(specialtyOrInterest)
+                .studentHope(studentHope)
+                .parentHope(parentHope)
+                .reason(reason)
+                .build();
     }
 }

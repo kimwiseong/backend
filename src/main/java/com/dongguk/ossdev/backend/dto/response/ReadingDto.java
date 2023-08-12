@@ -7,20 +7,12 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-@NoArgsConstructor
 public class ReadingDto {
-    private Long id;
-    private int grade;
-    private String semester;
-    private String title;
-    private String subject;
+    private final Long id;
+    private final int grade;
+    private final String semester;
+    private final String title;
+    private final String subject;
 
-    @Builder
-    public ReadingDto(Long id, int grade, String semester, String title, String subject) {
-        this.id = id;
-        this.grade = grade;
-        this.semester = semester;
-        this.title = title;
-        this.subject = subject;
-    }
+
 }

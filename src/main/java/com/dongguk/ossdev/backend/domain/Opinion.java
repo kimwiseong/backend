@@ -1,6 +1,7 @@
 package com.dongguk.ossdev.backend.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,11 @@ public class Opinion {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "school_record_id")
     private SchoolRecord schoolRecord;
+
+    @Builder
+    public Opinion(int grade, String content, SchoolRecord schoolRecord) {
+        this.grade = grade;
+        this.content = content;
+        this.schoolRecord = schoolRecord;
+    }
 }

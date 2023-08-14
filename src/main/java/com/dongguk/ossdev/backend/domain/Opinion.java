@@ -14,6 +14,7 @@ public class Opinion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "opinion_id")
     private Long id;
 
     private int grade;
@@ -32,4 +33,11 @@ public class Opinion {
         this.content = content;
         this.schoolRecord = schoolRecord;
     }
+
+    // ========= mapping method =========
+    public void setSchoolRecord(SchoolRecord schoolRecord) {
+        this.schoolRecord = schoolRecord;
+        schoolRecord.getOpinionList().add(this);
+    }
+
 }

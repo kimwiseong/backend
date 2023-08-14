@@ -14,6 +14,7 @@ public class Educational {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "educational_id")
     private Long id;
 
     private int grade;
@@ -44,5 +45,11 @@ public class Educational {
         this.rank = rank;
         this.detailAndSpecialty = detailAndSpecialty;
         this.schoolRecord = schoolRecord;
+    }
+
+    // ========= mapping method =========
+    public void setSchoolRecord(SchoolRecord schoolRecord) {
+        this.schoolRecord = schoolRecord;
+        schoolRecord.getEducationalList().add(this);
     }
 }

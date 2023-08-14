@@ -14,6 +14,7 @@ public class Award {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "award_id")
     private Long id;
 
     private String name;
@@ -41,4 +42,12 @@ public class Award {
         this.target = target;
         this.schoolRecord = schoolRecord;
     }
+
+
+    // ========= mapping method =========
+    public void setSchoolRecord(SchoolRecord schoolRecord) {
+        this.schoolRecord = schoolRecord;
+        schoolRecord.getAwardList().add(this);
+    }
+
 }

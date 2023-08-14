@@ -46,5 +46,9 @@ public class SchoolRecord {
     private List<Opinion> opinionList = new ArrayList<>();
 
     // ========= mapping method =========
+    public void setUser(User user) {
+        this.user = user;
+        user.setSchoolRecord(this);
+    }
 
 }

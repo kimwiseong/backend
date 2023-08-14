@@ -63,4 +63,10 @@ public class User {
     @OneToOne(mappedBy = "user", fetch = LAZY)
     private SchoolRecord schoolRecord;
 
+
+    // ========= mapping method =========
+    public void setSchoolRecord(SchoolRecord schoolRecord) {
+        this.schoolRecord = schoolRecord;
+    }
+
 }

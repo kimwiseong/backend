@@ -14,6 +14,7 @@ public class Creative {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "creative_id")
     private Long id;
 
     private int grade;
@@ -38,5 +39,11 @@ public class Creative {
         this.activityTime = activityTime;
         this.specialty = specialty;
         this.schoolRecord = schoolRecord;
+    }
+
+    // ========= mapping method =========
+    public void setSchoolRecord(SchoolRecord schoolRecord) {
+        this.schoolRecord = schoolRecord;
+        schoolRecord.getCreativeList().add(this);
     }
 }

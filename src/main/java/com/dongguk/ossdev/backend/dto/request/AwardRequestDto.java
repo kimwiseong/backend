@@ -1,23 +1,26 @@
 package com.dongguk.ossdev.backend.dto.request;
 
+import com.dongguk.ossdev.backend.domain.Award;
+import com.dongguk.ossdev.backend.domain.SchoolRecord;
 import lombok.*;
 
 @Getter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class AwardRequestDto {
-    private String name;    // 수상명
-    private String tier;    // 수상등급
-    private String date;    // 수상연월일
-    private String institution; // 수여 기관
-    private String target;  // 참가 대상
+    private final String name;    // 수상명
+    private final String tier;    // 수상등급
+    private final String date;    // 수상연월일
+    private final String institution; // 수여 기관
+    private final String target;  // 참가 대상
 
-    @Builder
-    public AwardRequestDto(String name, String tier, String date, String institution, String target) {
-        this.name = name;
-        this.tier = tier;
-        this.date = date;
-        this.institution = institution;
-        this.target = target;
+    public Award toEntity(SchoolRecord schoolRecord) {
+        return Award.builder()
+                .schoolRecord(schoolRecord)
+                .name(name)
+                .tier(tier)
+                .date(date)
+                .institution(institution)
+                .target(target)
+                .build();
     }
 }

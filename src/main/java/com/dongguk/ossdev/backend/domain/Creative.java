@@ -1,6 +1,7 @@
 package com.dongguk.ossdev.backend.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +30,13 @@ public class Creative {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "school_record_id")
     private SchoolRecord schoolRecord;
+
+    @Builder
+    public Creative(int grade, String area, int activityTime, String specialty, SchoolRecord schoolRecord) {
+        this.grade = grade;
+        this.area = area;
+        this.activityTime = activityTime;
+        this.specialty = specialty;
+        this.schoolRecord = schoolRecord;
+    }
 }

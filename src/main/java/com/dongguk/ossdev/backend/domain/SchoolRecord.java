@@ -1,6 +1,7 @@
 package com.dongguk.ossdev.backend.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -45,7 +46,5 @@ public class SchoolRecord {
     private List<Opinion> opinionList = new ArrayList<>();
 
     // ========= mapping method =========
-
-
 
 }

@@ -6,23 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class EducationalDto {
-    private int grade;
-    private String semester;
-    private String subject;
-    private String course;
-    private int rank;
-    private String detailAndSpecialty;
-
-    @Builder
-    public EducationalDto(int grade, String semester, String subject, String course, int rank, String detailAndSpecialty) {
-        this.grade = grade;
-        this.semester = semester;
-        this.subject = subject;
-        this.course = course;
-        this.rank = rank;
-        this.detailAndSpecialty = detailAndSpecialty;
-    }
+    private final Long id;
+    private final int grade;
+    private final String semester;
+    private final String subject;
+    private final String course;
+    private final int rank;
+    private final String detailAndSpecialty;
+    
 }

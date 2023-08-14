@@ -1,28 +1,29 @@
 package com.dongguk.ossdev.backend.dto.request;
 
-import lombok.Builder;
+import com.dongguk.ossdev.backend.domain.Educational;
+import com.dongguk.ossdev.backend.domain.SchoolRecord;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class EducationalRequestDto {
-    private int grade;
-    private String semester;
-    private String subject;
-    private String course;
-    private int rank;
-    private String detailAndSpecialty;
+    private final int grade;
+    private final String semester;
+    private final String subject;
+    private final String course;
+    private final int rank;
+    private final String detailAndSpecialty;
 
-    @Builder
-    public EducationalRequestDto(int grade, String semester, String subject, String course, int rank, String detailAndSpecialty) {
-        this.grade = grade;
-        this.semester = semester;
-        this.subject = subject;
-        this.course = course;
-        this.rank = rank;
-        this.detailAndSpecialty = detailAndSpecialty;
+    public Educational toEntity(SchoolRecord schoolRecord) {
+        return Educational.builder()
+                .schoolRecord(schoolRecord)
+                .grade(grade)
+                .semester(semester)
+                .subject(subject)
+                .course(course)
+                .rank(rank)
+                .detailAndSpecialty(detailAndSpecialty)
+                .build();
     }
 }

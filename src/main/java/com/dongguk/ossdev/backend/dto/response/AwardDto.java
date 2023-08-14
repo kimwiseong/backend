@@ -8,23 +8,13 @@ import lombok.RequiredArgsConstructor;
 import java.sql.Timestamp;
 
 @Getter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class AwardDto {
-    private Long id;
-    private String name;
-    private String tier;
-    private String date;
-    private String institution;
-    private String target;
+    private final Long id;
+    private final String name;
+    private final String tier;
+    private final String date;
+    private final String institution;
+    private final String target;
 
-    @Builder
-    public AwardDto(Long id, String name, String tier, String date, String institution, String target) {
-        this.id = id;
-        this.name = name;
-        this.tier = tier;
-        this.date = date;
-        this.institution = institution;
-        this.target = target;
-    }
 }

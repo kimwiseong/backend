@@ -1,5 +1,6 @@
 package com.dongguk.ossdev.backend.domain;
 
+import com.dongguk.ossdev.backend.dto.request.ReadingRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,5 +45,17 @@ public class Reading extends BaseTimeEntity {
     public void setSchoolRecord(SchoolRecord schoolRecord) {
         this.schoolRecord = schoolRecord;
         schoolRecord.getReadingList().add(this);
+    }
+
+    public void patch(ReadingRequestDto updateRequest) {
+        Integer grade = updateRequest.getGrade();
+        if (grade != null)
+            this.grade = updateRequest.getGrade();
+        if (updateRequest.getSemester() != null)
+            this.semester = updateRequest.getSemester();
+        if (updateRequest.getSubject() != null)
+            this.subject = updateRequest.getSubject();
+        if (updateRequest.getTitle() != null)
+            this.title = updateRequest.getTitle();
     }
 }

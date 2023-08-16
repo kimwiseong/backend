@@ -18,8 +18,8 @@ public class ReadingController {
     private final ReadingService readingService;
 
     @PostMapping("/reading")
-    public ResponseEntity<ReadingDto> create(@RequestBody ReadingRequestDto createRequest) {
-        ReadingDto createdDto = readingService.create(createRequest);
+    public ResponseEntity<List<ReadingDto>> create(@RequestBody List<ReadingRequestDto> createRequest) {
+        List<ReadingDto> createdDto = readingService.create(createRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
     }
 

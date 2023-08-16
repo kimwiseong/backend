@@ -1,11 +1,14 @@
 package com.dongguk.ossdev.backend.domain;
 
-import com.dongguk.ossdev.backend.domain.type.Oauth2Provider;
-import com.dongguk.ossdev.backend.domain.type.UserRole;
+import com.dongguk.ossdev.backend.type.LoginProvider;
+import com.dongguk.ossdev.backend.type.UserRole;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @NoArgsConstructor
 @Table(name = "users")
 @DynamicUpdate
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,16 +39,12 @@ public class User {
     private String socialId;
 
     @Enumerated(EnumType.STRING)
-    private Oauth2Provider provider;
+    private LoginProvider provider;
 
     private String refreshToken;
 
-    private String accessToken;
-
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
-    private Timestamp createDate;
 
     private Boolean isGraduate;
 
@@ -69,4 +68,24 @@ public class User {
         this.schoolRecord = schoolRecord;
     }
 
+    @Builder
+    public User(String name, String email, String password, String socialId, LoginProvider provider, String refreshToken, UserRole role, Boolean isLogin, Boolean isValid) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.socialId = socialId;
+        this.provider = provider;
+        this.refreshToken = refreshToken;
+        this.role = role;
+        this.isLogin = isLogin;
+        this.isValid = isValid;
+    }
+
+    public void setIsLogin(boolean isLogin) {
+        this.isLogin = isLogin;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }

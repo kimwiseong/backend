@@ -15,9 +15,8 @@ public class ReadingRequestDto {
     private final String title;
     private final String subject;
 
-    public Reading toEntity(SchoolRecord schoolRecord) {
+    public Reading toEntity() {
         return Reading.builder()
-                .schoolRecord(schoolRecord)
                 .grade(grade)
                 .subject(subject)
                 .title(title)

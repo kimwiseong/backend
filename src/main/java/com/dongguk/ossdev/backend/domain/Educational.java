@@ -1,5 +1,6 @@
 package com.dongguk.ossdev.backend.domain;
 
+import com.dongguk.ossdev.backend.dto.request.EducationalRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,5 +52,22 @@ public class Educational extends BaseTimeEntity {
     public void setSchoolRecord(SchoolRecord schoolRecord) {
         this.schoolRecord = schoolRecord;
         schoolRecord.getEducationalList().add(this);
+    }
+
+    public void patch(EducationalRequestDto updateRequest) {
+        Integer grade = updateRequest.getGrade();
+        Integer rank = updateRequest.getRank();
+        if (grade != null)
+            this.grade = updateRequest.getGrade();
+        if (rank != null)
+            this.rank = updateRequest.getRank();
+        if (updateRequest.getSubject() != null)
+            this.subject = updateRequest.getSubject();
+        if (updateRequest.getCourse() != null)
+            this.course = updateRequest.getCourse();
+        if (updateRequest.getSemester() != null)
+            this.semester = updateRequest.getSemester();
+        if (updateRequest.getDetailAndSpecialty() != null)
+            this.detailAndSpecialty = updateRequest.getDetailAndSpecialty();
     }
 }

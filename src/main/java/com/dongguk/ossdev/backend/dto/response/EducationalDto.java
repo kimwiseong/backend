@@ -1,8 +1,7 @@
 package com.dongguk.ossdev.backend.dto.response;
 
-import lombok.Builder;
+import com.dongguk.ossdev.backend.domain.Educational;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Getter
@@ -15,5 +14,16 @@ public class EducationalDto {
     private final String course;
     private final int rank;
     private final String detailAndSpecialty;
-    
+
+    public static EducationalDto createEducationalDto(Educational educational) {
+        return new EducationalDto(
+                educational.getId(),
+                educational.getGrade(),
+                educational.getSemester(),
+                educational.getSubject(),
+                educational.getCourse(),
+                educational.getRank(),
+                educational.getDetailAndSpecialty()
+        );
+    }
 }

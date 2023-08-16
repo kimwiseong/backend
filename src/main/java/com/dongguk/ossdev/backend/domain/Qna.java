@@ -3,6 +3,7 @@ package com.dongguk.ossdev.backend.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
 
@@ -11,7 +12,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Qna {
+public class Qna extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +24,6 @@ public class Qna {
 
     @Lob
     private String answer;
-
-    private Timestamp createDate;
 
     // ========= mapping =========
 

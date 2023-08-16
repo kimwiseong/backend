@@ -23,4 +23,16 @@ public class AwardRequestDto {
                 .target(target)
                 .build();
     }
+
+    public Award toEntity() {
+        return Award.builder()
+//                .schoolRecord(schoolRecord)
+                .name(name)
+                .tier(tier)
+                .date(date)
+                .institution(institution)
+                .target(target)
+                .build();
+    }
+
 }

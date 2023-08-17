@@ -26,6 +26,7 @@ public class Educational extends BaseTimeEntity {
 
     private String course;
 
+    @Column(name = "ranking")
     private int rank;
 
     @Lob

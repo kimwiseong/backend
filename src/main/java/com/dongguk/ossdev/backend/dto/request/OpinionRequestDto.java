@@ -13,9 +13,8 @@ public class OpinionRequestDto {
     private final int grade;
     private final String content;
 
-    public Opinion toEntity(SchoolRecord schoolRecord) {
+    public Opinion toEntity() {
         return Opinion.builder()
-                .schoolRecord(schoolRecord)
                 .grade(grade)
                 .content(content)
                 .build();

@@ -1,5 +1,6 @@
 package com.dongguk.ossdev.backend.domain;
 
+import com.dongguk.ossdev.backend.dto.request.OpinionRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,4 +41,11 @@ public class Opinion extends BaseTimeEntity {
         schoolRecord.getOpinionList().add(this);
     }
 
+    public void patch(OpinionRequestDto updateRequest) {
+        Integer grade = updateRequest.getGrade();
+        if (grade != null)
+            this.grade = updateRequest.getGrade();
+        if (updateRequest.getContent() != null)
+            this.content = updateRequest.getContent();
+    }
 }

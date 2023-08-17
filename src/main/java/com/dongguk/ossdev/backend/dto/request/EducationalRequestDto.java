@@ -15,9 +15,8 @@ public class EducationalRequestDto {
     private final int rank;
     private final String detailAndSpecialty;
 
-    public Educational toEntity(SchoolRecord schoolRecord) {
+    public Educational toEntity() {
         return Educational.builder()
-                .schoolRecord(schoolRecord)
                 .grade(grade)
                 .semester(semester)
                 .subject(subject)

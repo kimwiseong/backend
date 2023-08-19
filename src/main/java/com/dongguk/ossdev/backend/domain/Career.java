@@ -1,5 +1,6 @@
 package com.dongguk.ossdev.backend.domain;
 
+import com.dongguk.ossdev.backend.dto.request.CareerRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,5 +49,13 @@ public class Career extends BaseTimeEntity {
     public void setSchoolRecord(SchoolRecord schoolRecord) {
         this.schoolRecord = schoolRecord;
         schoolRecord.getCareerList().add(this);
+    }
+
+    public void update(CareerRequestDto careerDto) {
+        this.grade = careerDto.getGrade();
+        this.specialtyOrInterest = careerDto.getSpecialtyOrInterest();
+        this.studentHope = careerDto.getStudentHope();
+        this.parentHope = careerDto.getParentHope();
+        this.reason = careerDto.getReason();
     }
 }

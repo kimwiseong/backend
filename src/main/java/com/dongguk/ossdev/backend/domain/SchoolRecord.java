@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import static jakarta.persistence.FetchType.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@ToString
 public class SchoolRecord extends BaseTimeEntity {
 
     @Id
@@ -50,5 +52,13 @@ public class SchoolRecord extends BaseTimeEntity {
         this.user = user;
         user.setSchoolRecord(this);
     }
+
+    // ========= 생성 메소드 =========
+    public static SchoolRecord createSchoolRecord(User user) {
+        SchoolRecord schoolRecord = new SchoolRecord();
+        schoolRecord.setUser(user);
+        return schoolRecord;
+    }
+
 
 }

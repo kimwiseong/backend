@@ -1,5 +1,6 @@
 package com.dongguk.ossdev.backend.domain;
 
+import com.dongguk.ossdev.backend.dto.request.CreativeRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,4 +47,12 @@ public class Creative extends BaseTimeEntity {
         this.schoolRecord = schoolRecord;
         schoolRecord.getCreativeList().add(this);
     }
+
+    public void update(CreativeRequestDto creativeDto) {
+        this.grade = creativeDto.getGrade();
+        this.area = creativeDto.getArea();
+        this.activityTime = creativeDto.getActivityTime();
+        this.specialty = creativeDto.getSpecialty();
+    }
+
 }

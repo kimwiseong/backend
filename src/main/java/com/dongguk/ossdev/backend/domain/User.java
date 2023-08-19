@@ -1,5 +1,6 @@
 package com.dongguk.ossdev.backend.domain;
 
+import com.dongguk.ossdev.backend.dto.request.UserRequestDto;
 import com.dongguk.ossdev.backend.type.LoginProvider;
 import com.dongguk.ossdev.backend.type.UserRole;
 import jakarta.persistence.*;
@@ -69,12 +70,14 @@ public class User extends BaseTimeEntity {
     }
 
     @Builder
-    public User(String name, String email, String password, String socialId, LoginProvider provider, String refreshToken, UserRole role, Boolean isLogin, Boolean isValid) {
+    public User(String name, String email, String password, String socialId, LoginProvider provider, boolean isGraduate,
+                String refreshToken, UserRole role, Boolean isLogin, Boolean isValid) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.socialId = socialId;
         this.provider = provider;
+        this.isGraduate = isGraduate;
         this.refreshToken = refreshToken;
         this.role = role;
         this.isLogin = isLogin;
@@ -87,5 +90,15 @@ public class User extends BaseTimeEntity {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public void update(UserRequestDto userRequestDto) {
+        this.name = userRequestDto.getName();
+        this.email = userRequestDto.getEmail();
+        this.isGraduate = userRequestDto.getIsGraduate();
+    }
+
+    public void delete() {
+        this.isValid = false;
     }
 }

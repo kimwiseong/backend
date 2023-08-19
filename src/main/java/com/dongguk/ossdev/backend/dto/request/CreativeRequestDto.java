@@ -24,4 +24,13 @@ public class CreativeRequestDto {
                 .specialty(specialty)
                 .build();
     }
+
+    public Creative toEntity() {
+        return Creative.builder()
+                .grade(grade)
+                .activityTime(activityTime)
+                .area(area)
+                .specialty(specialty)
+                .build();
+    }
 }

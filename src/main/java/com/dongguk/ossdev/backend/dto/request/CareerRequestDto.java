@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class CareerRequestDto {
-    private final String name;
     private final int grade;
     private final String specialtyOrInterest;
     private final String studentHope;
@@ -20,6 +19,16 @@ public class CareerRequestDto {
     public Career toEntity(SchoolRecord schoolRecord) {
         return Career.builder()
                 .schoolRecord(schoolRecord)
+                .grade(grade)
+                .specialtyOrInterest(specialtyOrInterest)
+                .studentHope(studentHope)
+                .parentHope(parentHope)
+                .reason(reason)
+                .build();
+    }
+
+    public Career toEntity() {
+        return Career.builder()
                 .grade(grade)
                 .specialtyOrInterest(specialtyOrInterest)
                 .studentHope(studentHope)

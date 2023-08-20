@@ -1,17 +1,14 @@
 package com.dongguk.ossdev.backend.domain;
 
 import com.dongguk.ossdev.backend.dto.request.UserRequestDto;
-import com.dongguk.ossdev.backend.type.LoginProvider;
-import com.dongguk.ossdev.backend.type.UserRole;
+import com.dongguk.ossdev.backend.domain.type.LoginProvider;
+import com.dongguk.ossdev.backend.domain.type.UserRole;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.annotation.CreatedDate;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 

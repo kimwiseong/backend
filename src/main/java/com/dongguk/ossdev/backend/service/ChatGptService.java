@@ -23,7 +23,7 @@ import java.util.List;
 public class ChatGptService {
     @Value("${chatgpt.api.token}")
     private String apiKey;
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate = new RestTemplate();
 
     public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
         HttpHeaders headers = new HttpHeaders();

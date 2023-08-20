@@ -1,7 +1,7 @@
 package com.dongguk.ossdev.backend.security.jwt;
 
 import com.dongguk.ossdev.backend.repository.UserRepository;
-import com.dongguk.ossdev.backend.type.UserRole;
+import com.dongguk.ossdev.backend.domain.type.UserRole;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -16,8 +16,6 @@ import org.springframework.util.StringUtils;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Component
@@ -79,8 +77,8 @@ public class JwtProvider implements InitializingBean {
         String refreshToken = createToken(id, userRoleType, false);
 
         return JwtToken.builder()
-                .access_token(accessToken)
-                .refresh_token(refreshToken)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 

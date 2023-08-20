@@ -5,8 +5,8 @@ import com.dongguk.ossdev.backend.dto.response.JwtResponseDto;
 import com.dongguk.ossdev.backend.repository.UserRepository;
 import com.dongguk.ossdev.backend.security.jwt.JwtProvider;
 import com.dongguk.ossdev.backend.security.jwt.JwtToken;
-import com.dongguk.ossdev.backend.type.LoginProvider;
-import com.dongguk.ossdev.backend.type.UserRole;
+import com.dongguk.ossdev.backend.domain.type.LoginProvider;
+import com.dongguk.ossdev.backend.domain.type.UserRole;
 import com.dongguk.ossdev.backend.util.Oauth2Util;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -89,7 +89,7 @@ public class AuthService {
         }
 
         JwtToken jwtToken  = jwtProvider.createTotalToken(loginUser.getId(), loginUser.getRole());
-        loginUser.setRefreshToken(jwtToken.getRefresh_token());
+        loginUser.setRefreshToken(jwtToken.getRefreshToken());
         loginUser.setIsLogin(true);
 
 

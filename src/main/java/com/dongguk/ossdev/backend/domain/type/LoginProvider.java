@@ -1,4 +1,4 @@
-package com.dongguk.ossdev.backend.type;
+package com.dongguk.ossdev.backend.domain.type;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

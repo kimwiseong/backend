@@ -11,9 +11,9 @@ import java.util.Optional;
 @Repository
 public interface CareerRepository extends JpaRepository<Career, Long> {
 
-    Optional<List<Career>> findBySchoolRecordId(Long schoolRecordId);
+    List<Career> findBySchoolRecordId(Long schoolRecordId);
 
-    Optional<List<Career>> findBySchoolRecordId(Long schoolRecordId, Sort grade);
+    List<Career> findBySchoolRecordId(Long schoolRecordId, Sort grade);
 
 //    Optional<List<Career>> findBySchoolRecordIdSortByDate(Long schoolRecordId);
 }

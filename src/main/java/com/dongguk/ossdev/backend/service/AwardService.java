@@ -12,6 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,17 +33,19 @@ public class AwardService {
             awardRepository.save(awardRequestDto.toEntity());
         });
 
-        List<Award> AwardList = awardRepository.findBySchoolRecordId(schoolRecordId)
-                .orElseThrow(() -> new IllegalArgumentException("수상 경력을 찾을 수 없습니다."));
+        List<Award> awardList = awardRepository.findBySchoolRecordId(schoolRecordId);
+        if (awardList.isEmpty()) {
+            throw new IllegalArgumentException("수상 경력을 찾을 수 없습니다.");
+        }
 
-        return AwardDto.createAwardDtoList(AwardList);
+        return AwardDto.createAwardDtoList(awardList);
     }
 
     public List<AwardDto> read(Long schoolRecordId) {
-        List<Award> AwardList = awardRepository.findBySchoolRecordId(schoolRecordId)
+        return Optional.ofNullable(awardRepository.findBySchoolRecordId(schoolRecordId))
+                .filter(list -> !list.isEmpty())
+                .map(AwardDto::createAwardDtoList)
                 .orElseThrow(() -> new IllegalArgumentException("수상 경력을 찾을 수 없습니다."));
-
-        return AwardDto.createAwardDtoList(AwardList);
     }
 
     @Transactional

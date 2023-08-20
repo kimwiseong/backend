@@ -11,9 +11,9 @@ import java.util.Optional;
 @Repository
 public interface CreativeRepository extends JpaRepository<Creative, Long> {
 
-    Optional<List<Creative>> findBySchoolRecordId(Long schoolRecordId);
+    List<Creative> findBySchoolRecordId(Long schoolRecordId);
 
-    Optional<List<Creative>> findBySchoolRecordId(Long schoolRecordId, Sort grade);
+    List<Creative> findBySchoolRecordId(Long schoolRecordId, Sort grade);
 
 //    Optional<List<Creative>> findBySchoolRecordIdSortByDate(Long schoolRecordId);
 }

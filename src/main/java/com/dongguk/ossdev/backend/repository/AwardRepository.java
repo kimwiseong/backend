@@ -13,11 +13,8 @@ import java.util.Optional;
 @Repository
 public interface AwardRepository extends JpaRepository<Award, Long> {
 
-    Optional<List<Award>> findBySchoolRecordId(Long schoolRecordId);
+    List<Award> findBySchoolRecordId(Long schoolRecordId);
 
-    Optional<List<Award>> findBySchoolRecordId(Long schoolRecordId, Sort date);
-
-    @Query("select a from Award a where a.schoolRecord =: schoolRecordId order by a.date")
-    Optional<List<Award>> findBySchoolRecordIdSortByDate(@Param("schoolRecordId") Long schoolRecordId);
+    List<Award> findBySchoolRecordId(Long schoolRecordId, Sort date);
 
 }

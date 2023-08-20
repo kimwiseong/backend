@@ -3,6 +3,7 @@ package com.dongguk.ossdev.backend.service;
 import com.dongguk.ossdev.backend.domain.Career;
 import com.dongguk.ossdev.backend.domain.SchoolRecord;
 import com.dongguk.ossdev.backend.dto.request.CareerRequestDto;
+import com.dongguk.ossdev.backend.dto.response.AwardDto;
 import com.dongguk.ossdev.backend.dto.response.CareerDto;
 import com.dongguk.ossdev.backend.repository.CareerRepository;
 import com.dongguk.ossdev.backend.repository.SchoolRecordRepository;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,17 +34,19 @@ public class CareerService {
             careerRepository.save(careerRequestDto.toEntity());
         });
 
-        List<Career> careerList = careerRepository.findBySchoolRecordId(schoolRecordId)
-                .orElseThrow(() -> new IllegalArgumentException("진로 희망 사항을 찾을 수 없습니다."));
+        List<Career> careerList = careerRepository.findBySchoolRecordId(schoolRecordId);
+        if (careerList.isEmpty()) {
+            throw new IllegalArgumentException("진로 희망 사항을 찾을 수 없습니다.");
+        }
 
         return CareerDto.createCareerDtoList(careerList);
     }
 
     public List<CareerDto> read(Long schoolRecordId) {
-        List<Career> careerList = careerRepository.findBySchoolRecordId(schoolRecordId)
-                .orElseThrow(() -> new IllegalArgumentException("진로 희망 사항을 찾을 수 없습니다."));
-
-        return CareerDto.createCareerDtoList(careerList);
+        return Optional.ofNullable(careerRepository.findBySchoolRecordId(schoolRecordId))
+                .filter(list -> !list.isEmpty())
+                .map(CareerDto::createCareerDtoList)
+                .orElseThrow(() -> new IllegalArgumentException("수상 경력을 찾을 수 없습니다."));
     }
 
     public CareerDto updateById(Long careerId, CareerRequestDto careerRequestDto) {

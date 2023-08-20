@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,17 +34,20 @@ public class CreativeService {
             creativeRepository.save(creativeRequestDto.toEntity());
         });
 
-        List<Creative> creativeList = creativeRepository.findBySchoolRecordId(schoolRecordId)
-                .orElseThrow(() -> new IllegalArgumentException("창의적 체험활동상황을 찾을 수 없습니다."));
+        List<Creative> creativeList = creativeRepository.findBySchoolRecordId(schoolRecordId);
+        if (creativeList.isEmpty()) {
+            throw new IllegalArgumentException("창의적 체험활동상황을 찾을 수 없습니다.");
+        }
+
 
         return CreativeDto.createCreativeDtoList(creativeList);
     }
 
     public List<CreativeDto> read(Long schoolRecordId) {
-        List<Creative> creativeList = creativeRepository.findBySchoolRecordId(schoolRecordId)
-                .orElseThrow(() -> new IllegalArgumentException("창의적 체험활동상황을 찾을 수 없습니다."));
-
-        return CreativeDto.createCreativeDtoList(creativeList);
+        return Optional.ofNullable(creativeRepository.findBySchoolRecordId(schoolRecordId))
+                .filter(list -> !list.isEmpty())
+                .map(CreativeDto::createCreativeDtoList)
+                .orElseThrow(() -> new IllegalArgumentException("수상 경력을 찾을 수 없습니다."));
     }
 
     public CreativeDto updateById(Long creativeId, CreativeRequestDto creativeRequestDto) {

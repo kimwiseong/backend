@@ -4,6 +4,9 @@ import com.dongguk.ossdev.backend.domain.Educational;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 @RequiredArgsConstructor
 public class EducationalDto {
@@ -25,5 +28,17 @@ public class EducationalDto {
                 educational.getRank(),
                 educational.getDetailAndSpecialty()
         );
+    }
+
+    public static List<EducationalDto> createEducationalDtoList(List<Educational> educationalList) {
+        return educationalList.stream().map(educational -> new EducationalDto(
+                educational.getId(),
+                educational.getGrade(),
+                educational.getSemester(),
+                educational.getSubject(),
+                educational.getCourse(),
+                educational.getRank(),
+                educational.getDetailAndSpecialty()
+        )).collect(Collectors.toList());
     }
 }

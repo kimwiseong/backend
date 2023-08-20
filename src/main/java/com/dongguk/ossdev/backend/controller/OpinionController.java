@@ -16,22 +16,16 @@ import java.util.List;
 public class OpinionController {
     private final OpinionService opinionService;
 
-    @PostMapping("/opinion")
-    public ResponseEntity<List<OpinionDto>> create(@RequestBody List<OpinionRequestDto> createRequest) {
-        List<OpinionDto> createdDto = opinionService.create(createRequest);
+    @PostMapping("/opinion/{schoolRecordId}")
+    public ResponseEntity<List<OpinionDto>> create(@PathVariable Long schoolRecordId, @RequestBody List<OpinionRequestDto> createRequest) {
+        List<OpinionDto> createdDto = opinionService.create(schoolRecordId, createRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
     }
 
-    @GetMapping("/opinion")
-    public ResponseEntity<List<OpinionDto>> readAll() {
-        List<OpinionDto> readDtos = opinionService.readAll();
+    @GetMapping("/opinion/{schoolRecordId}")
+    public ResponseEntity<List<OpinionDto>> read(@PathVariable Long schoolRecordId) {
+        List<OpinionDto> readDtos = opinionService.read(schoolRecordId);
         return ResponseEntity.status(HttpStatus.OK).body(readDtos);
-    }
-
-    @GetMapping("/opinion/{id}")
-    public ResponseEntity<OpinionDto> read(@PathVariable Long id) {
-        OpinionDto readDto = opinionService.read(id);
-        return ResponseEntity.status(HttpStatus.OK).body(readDto);
     }
 
     @PatchMapping("/opinion/{id}")

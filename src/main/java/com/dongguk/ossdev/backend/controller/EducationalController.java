@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.Path;
 
 import java.util.List;
 
@@ -19,22 +20,16 @@ import java.util.List;
 public class EducationalController {
     private final EducationalService educationalService;
 
-    @PostMapping("/educational")
-    public ResponseEntity<List<EducationalDto>> create(@RequestBody List<EducationalRequestDto> createRequest) {
-        List<EducationalDto> createdDto = educationalService.create(createRequest);
+    @PostMapping("/educational/{schoolRecordId}")
+    public ResponseEntity<List<EducationalDto>> create(@PathVariable Long schoolRecordId, @RequestBody List<EducationalRequestDto> createRequest) {
+        List<EducationalDto> createdDto = educationalService.create(schoolRecordId, createRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
     }
 
-    @GetMapping("/educational")
-    public ResponseEntity<List<EducationalDto>> readAll() {
-        List<EducationalDto> readDtos = educationalService.readAll();
+    @GetMapping("/educational/{schoolRecordId}")
+    public ResponseEntity<List<EducationalDto>> read(@PathVariable Long schoolRecordId) {
+        List<EducationalDto> readDtos = educationalService.read(schoolRecordId);
         return ResponseEntity.status(HttpStatus.OK).body(readDtos);
-    }
-
-    @GetMapping("/educational/{id}")
-    public ResponseEntity<EducationalDto> read(@PathVariable Long id) {
-        EducationalDto readDto = educationalService.read(id);
-        return ResponseEntity.status(HttpStatus.OK).body(readDto);
     }
 
     @PatchMapping("/educational/{id}")

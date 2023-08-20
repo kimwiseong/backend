@@ -1,11 +1,11 @@
 package com.dongguk.ossdev.backend.service;
 
 import com.dongguk.ossdev.backend.domain.Educational;
-import com.dongguk.ossdev.backend.domain.Opinion;
+import com.dongguk.ossdev.backend.domain.SchoolRecord;
 import com.dongguk.ossdev.backend.dto.request.EducationalRequestDto;
 import com.dongguk.ossdev.backend.dto.response.EducationalDto;
-import com.dongguk.ossdev.backend.dto.response.OpinionDto;
 import com.dongguk.ossdev.backend.repository.EducationalRepository;
+import com.dongguk.ossdev.backend.repository.SchoolRecordRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,17 +16,24 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class EducationalService {
+    private final SchoolRecordRepository schoolRecordRepository;
     private final EducationalRepository educationalRepository;
 
     @Transactional
-    public List<EducationalDto> create(List<EducationalRequestDto> createRequest) {
+    public List<EducationalDto> create(Long schoolRecordId, List<EducationalRequestDto> createRequest) {
+        SchoolRecord schoolRecord = schoolRecordRepository.findById(schoolRecordId)
+                .orElseThrow(() -> new IllegalArgumentException("생활기록부를 찾을 수 없습니다."));
+
+        if (!schoolRecord.getEducationalList().isEmpty()) {
+            throw new IllegalArgumentException("이미 생성된 교과학습 발달상황이 존재합니다.");
+        }
+
         List<Educational> createEntityList = createRequest.stream()
-                .map(createEducational -> createEducational.toEntity())
+                .map(createEducational -> createEducational.toEntity(schoolRecord))
                 .collect(Collectors.toList());
 
         createEntityList.stream()
-                .map(saveEntity -> educationalRepository.save(saveEntity))
-                .collect(Collectors.toList());
+                .map(saveEntity -> educationalRepository.save(saveEntity));
 
         List<EducationalDto> createDtos = createEntityList.stream()
                 .map(educational -> EducationalDto.createEducationalDto(educational))
@@ -34,23 +41,17 @@ public class EducationalService {
         return createDtos;
     }
 
-    public List<EducationalDto> readAll() {
-        List<Educational> educationalEntityList = educationalRepository.findAll();
+    public List<EducationalDto> read(Long schoolRecordId) {
+        List<Educational> educationalEntityList = educationalRepository.findBySchoolRecordId(schoolRecordId);
         List<EducationalDto> showDtos = educationalEntityList.stream()
                 .map(educational -> EducationalDto.createEducationalDto(educational))
                 .collect(Collectors.toList());
         return showDtos;
     }
 
-    public EducationalDto read(Long id) {
-        Educational educationalEntity = educationalRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("교과학습발달상황을 찾을 수 없습니다."));
-        EducationalDto showDto = EducationalDto.createEducationalDto(educationalEntity);
-        return showDto;
-    }
-
     @Transactional
     public EducationalDto update(Long id, EducationalRequestDto updateRequest) {
-        Educational target = educationalRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("교과학습발달상황을 찾을 수 없습니다."));
+        Educational target = educationalRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("교과학습 발달상황을 찾을 수 없습니다."));
         target.patch(updateRequest);
         Educational updateEducationalEntity = updateRequest.toEntity();
         EducationalDto updatedDto = EducationalDto.createEducationalDto(updateEducationalEntity);
@@ -59,7 +60,7 @@ public class EducationalService {
 
     @Transactional
     public EducationalDto delete(Long id) {
-        Educational target = educationalRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("독서 활동 상황을 찾을 수 없습니다."));
+        Educational target = educationalRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("교과학습 발달상황을 찾을 수 없습니다."));
         EducationalDto deletedDto = EducationalDto.createEducationalDto(target);
         educationalRepository.delete(target);
         return deletedDto;

@@ -1,31 +1,39 @@
 package com.dongguk.ossdev.backend.service;
 
 import com.dongguk.ossdev.backend.domain.Reading;
+import com.dongguk.ossdev.backend.domain.SchoolRecord;
 import com.dongguk.ossdev.backend.dto.request.ReadingRequestDto;
 import com.dongguk.ossdev.backend.dto.response.ReadingDto;
 import com.dongguk.ossdev.backend.repository.ReadingRepository;
+import com.dongguk.ossdev.backend.repository.SchoolRecordRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ReadingService {
+    private final SchoolRecordRepository schoolRecordRepository;
     private final ReadingRepository readingRepository;
 
     @Transactional
-    public List<ReadingDto> create(List<ReadingRequestDto> createRequest) {
+    public List<ReadingDto> create(Long schoolRecordId, List<ReadingRequestDto> createRequest) {
+        SchoolRecord schoolRecord = schoolRecordRepository.findById(schoolRecordId)
+                .orElseThrow(() -> new IllegalArgumentException("생활기록부를 찾을 수 없습니다."));
+
+        if (!schoolRecord.getEducationalList().isEmpty()) {
+            throw new IllegalArgumentException("이미 생성된 독서 활동상황이 존재합니다.");
+        }
+
         List<Reading> createEntityList = createRequest.stream()
                 .map(createReading -> createReading.toEntity())
                 .collect(Collectors.toList());
 
         createEntityList.stream()
-                .map(saveEntity -> readingRepository.save(saveEntity))
-                        .collect(Collectors.toList());
+                .map(saveEntity -> readingRepository.save(saveEntity));
 
         List<ReadingDto> createDtos = createEntityList.stream()
                 .map(reading -> ReadingDto.createReadingDto(reading))
@@ -33,14 +41,8 @@ public class ReadingService {
         return createDtos;
     }
 
-    public ReadingDto read(Long id) {
-        Reading readingEntity = readingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("독서 활동 상황을 찾을 수 없습니다."));
-        ReadingDto showDto = ReadingDto.createReadingDto(readingEntity);
-        return showDto;
-    }
-
-    public List<ReadingDto> readAll() {
-        List<Reading> readingEntityList = readingRepository.findAll();
+    public List<ReadingDto> read(Long schoolRecordId) {
+        List<Reading> readingEntityList = readingRepository.findBySchoolRecordId(schoolRecordId);
         List<ReadingDto> showDtos = readingEntityList.stream()
                 .map(reading -> ReadingDto.createReadingDto(reading))
                 .collect(Collectors.toList());

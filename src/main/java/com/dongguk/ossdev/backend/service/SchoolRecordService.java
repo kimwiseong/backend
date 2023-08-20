@@ -1,10 +1,7 @@
 package com.dongguk.ossdev.backend.service;
 
 import com.dongguk.ossdev.backend.domain.*;
-import com.dongguk.ossdev.backend.dto.response.AwardDto;
-import com.dongguk.ossdev.backend.dto.response.CareerDto;
-import com.dongguk.ossdev.backend.dto.response.CreativeDto;
-import com.dongguk.ossdev.backend.dto.response.SchoolRecordDto;
+import com.dongguk.ossdev.backend.dto.response.*;
 import com.dongguk.ossdev.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,8 +66,29 @@ public class SchoolRecordService {
         List<CreativeDto> creativeDtoList = CreativeDto.createCreativeDtoList(
                 creativeRepository.findBySchoolRecordId(schoolRecordId, Sort.by(Sort.Direction.ASC,"grade")));
 
-        if (careerDtoList.isEmpty()) {
-            throw new IllegalArgumentException("창의적 체험활동 상황를 찾을 수 없습니다.");
+        if (creativeDtoList.isEmpty()) {
+            throw new IllegalArgumentException("창의적 체험활동 상황을 찾을 수 없습니다.");
+        }
+
+        List<EducationalDto> educationalDtoList = EducationalDto.createEducationalDtoList(
+                educationalRepository.findBySchoolRecordId(schoolRecordId, Sort.by(Sort.Direction.ASC,"grade")));
+
+        if (educationalDtoList.isEmpty()) {
+            throw new IllegalArgumentException("교과학습 발달상황을 찾을 수 없습니다.");
+        }
+
+        List<ReadingDto> readingDtoList = ReadingDto.createReadingDtoList(
+                readingRepository.findBySchoolRecordId(schoolRecordId, Sort.by(Sort.Direction.ASC,"grade")));
+
+        if (readingDtoList.isEmpty()) {
+            throw new IllegalArgumentException("독서 활동상황을 찾을 수 없습니다.");
+        }
+
+        List<OpinionDto> opinionDtoList = OpinionDto.createOpinionDtoList(
+                opinionRepository.findBySchoolRecordId(schoolRecordId, Sort.by(Sort.Direction.ASC,"grade")));
+
+        if (opinionDtoList.isEmpty()) {
+            throw new IllegalArgumentException("행동특성 및 종합의견을 찾을 수 없습니다.");
         }
 
         return SchoolRecordDto.builder()

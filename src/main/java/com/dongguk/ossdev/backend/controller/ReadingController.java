@@ -17,22 +17,16 @@ import java.util.List;
 public class ReadingController {
     private final ReadingService readingService;
 
-    @PostMapping("/reading")
-    public ResponseEntity<List<ReadingDto>> create(@RequestBody List<ReadingRequestDto> createRequest) {
-        List<ReadingDto> createdDto = readingService.create(createRequest);
+    @PostMapping("/reading/{schoolRecordId}")
+    public ResponseEntity<List<ReadingDto>> create(@PathVariable Long schoolRecordId, @RequestBody List<ReadingRequestDto> createRequest) {
+        List<ReadingDto> createdDto = readingService.create(schoolRecordId, createRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
     }
 
-    @GetMapping("/reading")
-    public ResponseEntity<List<ReadingDto>> readAll() {
-        List<ReadingDto> readDtos = readingService.readAll();
+    @GetMapping("/reading/{schoolRecordId}")
+    public ResponseEntity<List<ReadingDto>> read(@PathVariable Long schoolRecordId) {
+        List<ReadingDto> readDtos = readingService.read(schoolRecordId);
         return ResponseEntity.status(HttpStatus.OK).body(readDtos);
-    }
-
-    @GetMapping("/reading/{id}")
-    public ResponseEntity<ReadingDto> read(@PathVariable Long id) {
-        ReadingDto readDto = readingService.read(id);
-        return ResponseEntity.status(HttpStatus.OK).body(readDto);
     }
 
     @PatchMapping("/reading/{id}")

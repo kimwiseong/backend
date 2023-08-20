@@ -34,7 +34,7 @@ public class SchoolRecordService {
         schoolRecordRepository.save(schoolRecord);
 
         return SchoolRecordDto.builder()
-                .school_record_id(schoolRecord.getId())
+                .schoolRecordId(schoolRecord.getId())
                 .build();
     }
 
@@ -92,10 +92,13 @@ public class SchoolRecordService {
         }
 
         return SchoolRecordDto.builder()
-                .school_record_id(schoolRecordId)
+                .schoolRecordId(schoolRecordId)
                 .awardDtoList(awardDtoList)
                 .careerDtoList(careerDtoList)
                 .creativeDtoList(creativeDtoList)
+                .educationalDtoList(educationalDtoList)
+                .readingDtoList(readingDtoList)
+                .opinionDtoList(opinionDtoList)
                 .build();
     }
 }

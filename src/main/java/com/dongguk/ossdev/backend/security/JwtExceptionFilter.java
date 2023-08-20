@@ -29,6 +29,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
         boolean isException = false;
         try {
             filterChain.doFilter(request, response);
+
             log.info("JwtExceptionFilter Response doFilterInternal");
         } catch (SecurityException e) {
             log.error("FilterException throw SecurityException Exception : {}", e.getMessage());

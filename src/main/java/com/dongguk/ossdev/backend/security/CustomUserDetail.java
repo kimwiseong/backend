@@ -33,6 +33,8 @@ public class CustomUserDetail implements UserDetails {
         List<GrantedAuthority> authorities = Collections.
                 singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
 
+        log.info(user.getId().toString());
+
         return new CustomUserDetail(
                 user.getId(),
                 authorities

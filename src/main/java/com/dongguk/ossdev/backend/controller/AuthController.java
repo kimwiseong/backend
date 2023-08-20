@@ -1,7 +1,7 @@
 package com.dongguk.ossdev.backend.controller;
 
 import com.dongguk.ossdev.backend.service.AuthService;
-import com.dongguk.ossdev.backend.type.LoginProvider;
+import com.dongguk.ossdev.backend.domain.type.LoginProvider;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

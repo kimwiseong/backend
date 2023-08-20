@@ -19,12 +19,10 @@ import java.util.Locale;
 public class ChatGptController {
     private final ChatGptService chatGptService;
 
-    @PostMapping("/question")
-    public ChatGptResponseDto sendQuestion(Locale locale, HttpServletRequest request, HttpServletResponse response,
-                                           @RequestBody QuestionRequestDto questionRequest) {
-        ChatGptResponseDto chatGptResponse = chatGptService.askQuestion(questionRequest);
-
-
-        return chatGptResponse;
-    }
+//    @PostMapping("/question")
+//    public ChatGptResponseDto sendQuestion(Locale locale, HttpServletRequest request, HttpServletResponse response,
+//                                           @RequestBody QuestionRequestDto questionRequest) {
+//        ChatGptResponseDto chatGptResponse = chatGptService.askQuestion(questionRequest);
+//        return chatGptResponse;
+//    }
 }

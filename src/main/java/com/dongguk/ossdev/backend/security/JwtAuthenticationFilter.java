@@ -37,6 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         Claims claims = jwtProvider.validateToken(token);
 
         String userid = claims.get("id").toString();
+        log.info("{}", userid);
 
         CustomUserDetail userDetails = (CustomUserDetail) userDetailService.loadUserByUsername(userid);
 
@@ -45,6 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails((HttpServletRequest) request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        log.info(SecurityContextHolder.getContext().getAuthentication().getName());
         filterChain.doFilter(request, response);
         log.info("JwtAuthenticationFilter Response doFilterInternal");
     }

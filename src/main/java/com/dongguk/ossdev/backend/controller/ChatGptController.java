@@ -24,7 +24,7 @@ public class ChatGptController {
                                            @RequestBody QuestionRequestDto questionRequest) {
         ChatGptResponseDto chatGptResponse = chatGptService.askQuestion(questionRequest);
 
-        //return 부분은 자유롭게 수정하시면됩니다. ex)return chatGptResponse;
+
         return chatGptResponse;
     }
 }

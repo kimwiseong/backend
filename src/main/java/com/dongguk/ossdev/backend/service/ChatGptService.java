@@ -47,43 +47,43 @@ public class ChatGptService {
         return responseEntity.getBody();
     }
 
-    public ChatGptResponse askQuestion(QuestionRequest questionRequest){
-        List<ChatGptMessage> messages = new ArrayList<>();
-        messages.add(ChatGptMessage.builder()
-                .role(ChatGptConfig.ROLE)
-                .content(questionRequest.getQuestion())
-                .build());
-        return this.getResponse(
-                this.buildHttpEntity(
-                        new ChatGptRequest(
-                                ChatGptConfig.CHAT_MODEL,
-                                ChatGptConfig.MAX_TOKEN,
-                                ChatGptConfig.TEMPERATURE,
-                                ChatGptConfig.STREAM,
-                                messages
-                                //ChatGptConfig.TOP_P
-                        )
-                )
-        );
-    }
-
-    public ChatGptResponseDto askQuestion(QuestionRequestDto requestDto) {
-        List<ChatGptMessage> messages = new ArrayList<>();
-        messages.add(ChatGptMessage.builder()
-                .role(ChatGptConfig.ROLE)
-                .content(questionRequest.getQuestion())
-                .build());
-        return this.getResponse(
-                this.buildHttpEntity(ChatGptRequestDto.builder()
-                                .model(ChatGptConfig.CHAT_MODEL)
-                                .prompt(requestDto.getQuestion())
-                                .maxTokens(ChatGptConfig.MAX_TOKEN)
-                                .temperature(ChatGptConfig.TEMPERATURE)
-                                .topP(ChatGptConfig.TOP_P)
-                                .stream(ChatGptConfig.STREAM)
-                                .messages()
-                                .build()
-                )
-        );
-    }
+//    public ChatGptResponse askQuestion(QuestionRequest questionRequest){
+//        List<ChatGptMessage> messages = new ArrayList<>();
+//        messages.add(ChatGptMessage.builder()
+//                .role(ChatGptConfig.ROLE)
+//                .content(questionRequest.getQuestion())
+//                .build());
+//        return this.getResponse(
+//                this.buildHttpEntity(
+//                        new ChatGptRequest(
+//                                ChatGptConfig.CHAT_MODEL,
+//                                ChatGptConfig.MAX_TOKEN,
+//                                ChatGptConfig.TEMPERATURE,
+//                                ChatGptConfig.STREAM,
+//                                messages
+//                                //ChatGptConfig.TOP_P
+//                        )
+//                )
+//        );
+//    }
+//
+//    public ChatGptResponseDto askQuestion(QuestionRequestDto requestDto) {
+//        List<ChatGptMessage> messages = new ArrayList<>();
+//        messages.add(ChatGptMessage.builder()
+//                .role(ChatGptConfig.ROLE)
+//                .content(questionRequest.getQuestion())
+//                .build());
+//        return this.getResponse(
+//                this.buildHttpEntity(ChatGptRequestDto.builder()
+//                                .model(ChatGptConfig.CHAT_MODEL)
+//                                .prompt(requestDto.getQuestion())
+//                                .maxTokens(ChatGptConfig.MAX_TOKEN)
+//                                .temperature(ChatGptConfig.TEMPERATURE)
+//                                .topP(ChatGptConfig.TOP_P)
+//                                .stream(ChatGptConfig.STREAM)
+//                                .messages()
+//                                .build()
+//                )
+//        );
+//    }
 }

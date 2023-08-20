@@ -53,17 +53,25 @@ public class SchoolRecordService {
                 .orElseThrow(() -> new IllegalArgumentException("생활기록부를 찾을 수 없습니다."));;
 
         List<AwardDto> awardDtoList = AwardDto.createAwardDtoList(
-                awardRepository.findBySchoolRecordId(schoolRecordId, Sort.by(Sort.Direction.ASC,"date"))
-                        .orElseThrow(() -> new IllegalArgumentException("수상 경력를 찾을 수 없습니다.")));
+                awardRepository.findBySchoolRecordId(schoolRecordId, Sort.by(Sort.Direction.ASC,"date")));
+
+        if (awardDtoList.isEmpty()) {
+            throw new IllegalArgumentException("수상 경력를 찾을 수 없습니다.");
+        }
 
         List<CareerDto> careerDtoList = CareerDto.createCareerDtoList(
-                careerRepository.findBySchoolRecordId(schoolRecordId, Sort.by(Sort.Direction.ASC,"grade"))
-                        .orElseThrow(() -> new IllegalArgumentException("진로 희망 사항를 찾을 수 없습니다.")));
+                careerRepository.findBySchoolRecordId(schoolRecordId, Sort.by(Sort.Direction.ASC,"grade")));
+
+        if (careerDtoList.isEmpty()) {
+            throw new IllegalArgumentException("진로 희망 사항를 찾을 수 없습니다.");
+        }
 
         List<CreativeDto> creativeDtoList = CreativeDto.createCreativeDtoList(
-                creativeRepository.findBySchoolRecordId(schoolRecordId, Sort.by(Sort.Direction.ASC,"grade"))
-                        .orElseThrow(() -> new IllegalArgumentException("창의적 체험활동 상황를 찾을 수 없습니다.")));
+                creativeRepository.findBySchoolRecordId(schoolRecordId, Sort.by(Sort.Direction.ASC,"grade")));
 
+        if (careerDtoList.isEmpty()) {
+            throw new IllegalArgumentException("창의적 체험활동 상황를 찾을 수 없습니다.");
+        }
 
         return SchoolRecordDto.builder()
                 .school_record_id(schoolRecordId)

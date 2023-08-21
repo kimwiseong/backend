@@ -1,28 +1,24 @@
 package com.dongguk.ossdev.backend.controller;
 
-import com.dongguk.ossdev.backend.dto.request.QuestionRequestDto;
+import com.dongguk.ossdev.backend.dto.request.ChatGptRequestDto;
 import com.dongguk.ossdev.backend.dto.response.ChatGptResponseDto;
 import com.dongguk.ossdev.backend.service.ChatGptService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Locale;
 
 @RestController
-@RequestMapping("/chat-gpt")
+@RequestMapping("/api/chatgpt")
 @RequiredArgsConstructor
 public class ChatGptController {
     private final ChatGptService chatGptService;
 
-//    @PostMapping("/question")
-//    public ChatGptResponseDto sendQuestion(Locale locale, HttpServletRequest request, HttpServletResponse response,
-//                                           @RequestBody QuestionRequestDto questionRequest) {
-//        ChatGptResponseDto chatGptResponse = chatGptService.askQuestion(questionRequest);
-//        return chatGptResponse;
-//    }
+    @PostMapping("/completion/chat")
+    public ChatGptResponseDto completionChat(final @RequestBody ChatGptRequestDto gptCompletionChatRequest) {
+
+        return chatGptService.completionChat(gptCompletionChatRequest);
+    }
 }

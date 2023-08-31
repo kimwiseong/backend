@@ -39,8 +39,8 @@ public class EducationalController {
     }
 
     @DeleteMapping("/educational/{id}")
-    public ResponseEntity<EducationalDto> delete(@PathVariable Long id) {
-        EducationalDto deletedDto = educationalService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body(deletedDto);
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        educationalService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

@@ -60,10 +60,7 @@ public class OpinionService {
     }
 
     @Transactional
-    public OpinionDto delete(Long id) {
-        Opinion target = opinionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("독서 활동 상황을 찾을 수 없습니다."));
-        OpinionDto deletedDto = OpinionDto.createOpinionDto(target);
-        opinionRepository.delete(target);
-        return deletedDto;
+    public void deleteById(Long id) {
+        opinionRepository.delete(opinionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("행동 특성 및 종합의견을 찾을 수 없습니다.")));
     }
 }

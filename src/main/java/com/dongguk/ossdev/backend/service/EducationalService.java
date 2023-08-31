@@ -59,10 +59,9 @@ public class EducationalService {
     }
 
     @Transactional
-    public EducationalDto delete(Long id) {
-        Educational target = educationalRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("교과학습 발달상황을 찾을 수 없습니다."));
-        EducationalDto deletedDto = EducationalDto.createEducationalDto(target);
-        educationalRepository.delete(target);
-        return deletedDto;
+    public void deleteById(Long id) {
+        educationalRepository.delete(
+                educationalRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("교과학습 발달상황을 찾을 수 없습니다."))
+        );
     }
 }

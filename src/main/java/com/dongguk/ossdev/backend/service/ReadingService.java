@@ -59,10 +59,7 @@ public class ReadingService {
     }
 
     @Transactional
-    public ReadingDto delete(Long id) {
-        Reading target = readingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("독서 활동 상황을 찾을 수 없습니다."));
-        ReadingDto deletedDto = ReadingDto.createReadingDto(target);
-        readingRepository.delete(target);
-        return deletedDto;
+    public void deleteById(Long id) {
+        readingRepository.delete(readingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("독서 활동 상황을 찾을 수 없습니다.")));
     }
 }

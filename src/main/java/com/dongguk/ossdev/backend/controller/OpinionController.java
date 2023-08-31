@@ -35,8 +35,8 @@ public class OpinionController {
     }
 
     @DeleteMapping("/opinion/{id}")
-    public ResponseEntity<OpinionDto> delete(@PathVariable Long id) {
-        OpinionDto deletedDto = opinionService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body(deletedDto);
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        opinionService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

@@ -36,9 +36,9 @@ public class ReadingController {
     }
 
     @DeleteMapping("/reading/{id}")
-    public ResponseEntity<ReadingDto> delete(@PathVariable Long id) {
-        ReadingDto deletedDto = readingService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body(deletedDto);
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        readingService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

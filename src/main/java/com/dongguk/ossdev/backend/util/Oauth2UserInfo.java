@@ -8,13 +8,12 @@ public class Oauth2UserInfo {
 
     private String socialId;
     private String socialName;
-    private String socialEmail;
+
 
     @Builder
-    public Oauth2UserInfo(String socialId, String socialName, String socialEmail) {
+    public Oauth2UserInfo(String socialId, String socialName) {
         this.socialId = socialId;
         this.socialName = socialName;
-        this.socialEmail = socialEmail;
     }
 
 }

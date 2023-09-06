@@ -52,14 +52,13 @@ public class AuthService {
         String accessToken = null;
         String socialId = null;
         String socialName = null;
-        String socialEmail = null;
+
         switch (loginProviderType) {
             case KAKAO -> {
                 accessToken = oauth2Util.getKakaoAccessToken(authorizationCode);
                 Oauth2UserInfo oauth2UserInfo = oauth2Util.getKakaoUserInformation(accessToken);
                 socialId = oauth2UserInfo.getSocialId();
                 socialName = oauth2UserInfo.getSocialName();
-                socialEmail = oauth2UserInfo.getSocialEmail();
             }
 
             case NAVER -> {
@@ -67,7 +66,6 @@ public class AuthService {
                 Oauth2UserInfo oauth2UserInfo = oauth2Util.getNaverUserInformation(accessToken);
                 socialId = oauth2UserInfo.getSocialId();
                 socialName = oauth2UserInfo.getSocialName();
-                socialEmail = oauth2UserInfo.getSocialEmail();
             }
         }
 
@@ -93,7 +91,6 @@ public class AuthService {
             loginUser = userRepository.save(User.builder()
                     .socialId(socialId)
                     .name(socialName)
-                    .email(socialEmail)
                     .provider(loginProviderType)
                     .role(UserRole.USER)
                     .build());

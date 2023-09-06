@@ -17,4 +17,6 @@ public interface AwardRepository extends JpaRepository<Award, Long> {
 
     List<Award> findBySchoolRecordId(Long schoolRecordId, Sort date);
 
+//    @Query("select a.name, a.tier from Award a where a.schoolRecord.id =: id")
+//    List<Award> findNameAndTierBySchoolRecordId(Long schoolRecordId);
 }

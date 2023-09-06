@@ -11,7 +11,6 @@ import java.sql.Timestamp;
 public class UserDto {
     private final String name;
     private final String email;
-//    private final Timestamp created_at;
     private final Timestamp updatedAt;
     private final boolean isGraduate;
 
@@ -24,7 +23,6 @@ public class UserDto {
     }
 
     public static UserDto createUserDto(User user) {
-        log.info("userDto...{}", user.getName());
         return new UserDto(
                 user.getName(),
                 user.getEmail(),

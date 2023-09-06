@@ -16,6 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableMethodSecurity
@@ -30,19 +36,11 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
-                .httpBasic(HttpBasicConfigurer::disable)
+                .cors(cors -> cors.disable())
                 .csrf(CsrfConfigurer::disable)
+                .httpBasic(HttpBasicConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry.anyRequest().permitAll())
-
-//                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-//                        .requestMatchers(new AntPathRequestMatcher(
-//                                "/auth/kakao",
-//                                "auth/kakao/callback",
-//                                "/auth/naver",
-//                                "/auth/naver/callback")).permitAll())
-
                 .exceptionHandling(exception -> exception
                     .authenticationEntryPoint(jwtEntryPoint)
                     .accessDeniedHandler(jwtAccessDeniedHandler))
@@ -56,4 +54,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

@@ -103,32 +103,7 @@ public class Oauth2Util {
                 .getAsJsonObject().get("access_token").getAsString();
     }
 
-    public Map<? extends Object ,? extends Object> getKakaoSocialId(String accessToken) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-
-        httpHeaders.add("Authorization", "Bearer "+ accessToken);
-        httpHeaders.add("Content-type","application/x-www-form-urlencoded;charset=utf-8");
-
-        HttpEntity<MultiValueMap<String,String >> kakaoProfileRequest= new HttpEntity<>(httpHeaders);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                KAKAO_USERINFO_URL,
-                HttpMethod.POST,
-                kakaoProfileRequest,
-                String.class
-        );
-
-        JsonElement element = JsonParser.parseString(Objects.requireNonNull(response.getBody()));
-
-        Map<String, String> map = new HashMap<>();
-        map.put("name", element.getAsJsonObject().get("properties").getAsJsonObject().get("nickname").getAsString());
-        map.put("id", element.getAsJsonObject().get("id").getAsString());
-
-        return map;
-    }
-
-
-    public String getKakaoUserInformation(String accessToken) {
+    public Oauth2UserInfo getKakaoUserInformation(String accessToken) {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         httpHeaders.add("Authorization", "Bearer "+ accessToken);
@@ -144,9 +119,13 @@ public class Oauth2Util {
         );
 
         JsonElement element = JsonParser.parseString(response.getBody());
-        return element.getAsJsonObject().get("id").getAsString();
-    }
 
+        return Oauth2UserInfo.builder()
+                .socialId(element.getAsJsonObject().get("id").getAsString())
+                .socialName(element.getAsJsonObject().getAsJsonObject("properties").get("nickname").getAsString())
+                .socialEmail(element.getAsJsonObject().getAsJsonObject("kakao_account").get("email").getAsString())
+                .build();
+    }
 
     // naver
     public String getNaverAccessToken(String authCode) {
@@ -174,8 +153,7 @@ public class Oauth2Util {
                 .getAsJsonObject().get("access_token").getAsString();
     }
 
-
-    public String getNaverUserInformation(String accessToken) {
+    public Oauth2UserInfo getNaverUserInformation(String accessToken) {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         httpHeaders.add("Authorization", "Bearer "+ accessToken);
@@ -191,7 +169,12 @@ public class Oauth2Util {
         );
 
         JsonElement element = JsonParser.parseString(response.getBody());
-        return element.getAsJsonObject().getAsJsonObject("response").get("id").getAsString();
+
+        return Oauth2UserInfo.builder()
+                .socialId(element.getAsJsonObject().getAsJsonObject("response").get("id").getAsString())
+                .socialName(element.getAsJsonObject().getAsJsonObject("response").get("name").getAsString())
+                .socialEmail(element.getAsJsonObject().getAsJsonObject("response").get("email").getAsString())
+                .build();
     }
 }
 

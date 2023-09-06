@@ -20,6 +20,7 @@ public class UserController {
 
     @GetMapping("")
     public ResponseEntity<UserDto> read(HttpServletRequest request) {
+        log.info("get /user {}", Long.valueOf(request.getAttribute("USER_ID").toString()));
         UserDto userDto = userService.read(Long.valueOf(request.getAttribute("USER_ID").toString()));
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }

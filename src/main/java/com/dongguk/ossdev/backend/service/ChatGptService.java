@@ -76,6 +76,7 @@ public class ChatGptService {
         gptCompletionChatRequest.setMessage(prompt);
         gptCompletionChatRequest.setModel("gpt-3.5-turbo");
         gptCompletionChatRequest.setMaxTokens(1000);
+        gptCompletionChatRequest.setRole("assistant");
 
         ChatCompletionResult chatCompletion = openAiService.createChatCompletion(
                 ChatGptRequestDto.of(gptCompletionChatRequest));

@@ -4,10 +4,7 @@ import com.dongguk.ossdev.backend.dto.request.ChatGptRequestDto;
 import com.dongguk.ossdev.backend.dto.response.ChatGptResponseDto;
 import com.dongguk.ossdev.backend.service.ChatGptService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -16,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatGptController {
     private final ChatGptService chatGptService;
 
-    @PostMapping("/completion/chat")
-    public ChatGptResponseDto completionChat(final @RequestBody ChatGptRequestDto gptCompletionChatRequest) {
+    @PostMapping("/completion/chat/{userId}")
+    public ChatGptResponseDto completionChat(@PathVariable Long userId, final @RequestBody ChatGptRequestDto gptCompletionChatRequest) {
 
-        return chatGptService.completionChat(gptCompletionChatRequest);
+        return chatGptService.completionChat(userId, gptCompletionChatRequest);
     }
 }

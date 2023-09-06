@@ -21,8 +21,6 @@ public class SchoolRecordController {
 
     @PostMapping("")
     public ResponseEntity<SchoolRecordDto> create(HttpServletRequest request) {
-        Long userId = Long.valueOf(request.getAttribute("USER_ID").toString());
-        log.info("id = {}", userId);
         SchoolRecordDto schoolRecordDto = schoolRecordService
                 .create(Long.valueOf(request.getAttribute("USER_ID").toString()));
 

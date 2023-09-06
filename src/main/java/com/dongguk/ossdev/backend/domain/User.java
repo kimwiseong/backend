@@ -30,10 +30,6 @@ public class User extends BaseTimeEntity {
 
     private String name;
 
-    private String email;
-
-    private String password;
-
     private String socialId;
 
     @Enumerated(EnumType.STRING)
@@ -43,8 +39,6 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
-    private Boolean isGraduate;
 
     private Boolean isLogin;
 
@@ -67,14 +61,11 @@ public class User extends BaseTimeEntity {
     }
 
     @Builder
-    public User(String name, String email, String password, String socialId, LoginProvider provider, boolean isGraduate,
+    public User(String name, String socialId, LoginProvider provider,
                 String refreshToken, UserRole role, Boolean isLogin, Boolean isValid) {
         this.name = name;
-        this.email = email;
-        this.password = password;
         this.socialId = socialId;
         this.provider = provider;
-        this.isGraduate = isGraduate;
         this.refreshToken = refreshToken;
         this.role = role;
         this.isLogin = isLogin;
@@ -91,8 +82,6 @@ public class User extends BaseTimeEntity {
 
     public void update(UserRequestDto userRequestDto) {
         this.name = userRequestDto.getName();
-        this.email = userRequestDto.getEmail();
-        this.isGraduate = userRequestDto.getIsGraduate();
     }
 
     public void delete() {

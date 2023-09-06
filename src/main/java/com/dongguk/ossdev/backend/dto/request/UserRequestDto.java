@@ -10,18 +10,11 @@ import java.sql.Timestamp;
 @RequiredArgsConstructor
 public class UserRequestDto {
     private final String name;
-    private final String email;
-    private final boolean isGraduate;
 
-    public boolean getIsGraduate() {
-        return this.isGraduate;
-    }
 
     public User toEntity() {
         return User.builder()
                 .name(name)
-                .email(email)
-                .isGraduate(isGraduate)
                 .build();
     }
 }

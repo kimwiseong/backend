@@ -29,9 +29,17 @@ public class SchoolRecordService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
 
+        if (user.getSchoolRecord().getId() != null) {
+            log.info("기록부 이미 있는 놈");
+            return SchoolRecordDto.builder()
+                    .schoolRecordId(user.getSchoolRecord().getId())
+                    .build();
+        }
+
         // 연관 관계 설정
         SchoolRecord schoolRecord = SchoolRecord.createSchoolRecord(user);
         schoolRecordRepository.save(schoolRecord);
+
 
         return SchoolRecordDto.builder()
                 .schoolRecordId(schoolRecord.getId())

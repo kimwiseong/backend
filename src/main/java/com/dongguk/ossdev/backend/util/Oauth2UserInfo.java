@@ -9,7 +9,6 @@ public class Oauth2UserInfo {
     private String socialId;
     private String socialName;
 
-
     @Builder
     public Oauth2UserInfo(String socialId, String socialName) {
         this.socialId = socialId;

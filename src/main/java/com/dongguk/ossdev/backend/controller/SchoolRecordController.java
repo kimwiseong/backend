@@ -1,7 +1,5 @@
 package com.dongguk.ossdev.backend.controller;
 
-import com.dongguk.ossdev.backend.annotation.UserId;
-import com.dongguk.ossdev.backend.dto.response.ResponseDto;
 import com.dongguk.ossdev.backend.dto.response.SchoolRecordDto;
 import com.dongguk.ossdev.backend.service.SchoolRecordService;
 import jakarta.servlet.http.HttpServletRequest;

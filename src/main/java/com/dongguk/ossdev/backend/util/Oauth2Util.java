@@ -120,8 +120,6 @@ public class Oauth2Util {
 
         JsonElement element = JsonParser.parseString(response.getBody());
 
-        log.info("{}", element);
-
         return Oauth2UserInfo.builder()
                 .socialId(element.getAsJsonObject().get("id").getAsString())
                 .socialName(element.getAsJsonObject().getAsJsonObject("properties").get("nickname").getAsString())

@@ -59,6 +59,15 @@ public class Award extends BaseTimeEntity {
         return award;
     }
 
+    public void create(String name, String tier, String date, String institution, String target, SchoolRecord schoolRecord) {
+        this.name = name;
+        this.tier = tier;
+        this.date = date;
+        this.institution = institution;
+        this.target = target;
+        setSchoolRecord(schoolRecord);
+    }
+
 //    public void update(String name, String tier, String date, String institution, String target) {
 //        this.name = name;
 //        this.tier = tier;

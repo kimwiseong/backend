@@ -29,8 +29,7 @@ public class AwardService {
                 .orElseThrow(() -> new IllegalArgumentException("생활기록부를 찾을 수 없습니다."));
 
         awardRequestDtoList.stream().forEach(awardRequestDto -> {
-            awardRequestDto.toEntity().setSchoolRecord(schoolRecord);
-            awardRepository.save(awardRequestDto.toEntity());
+            awardRepository.save(awardRequestDto.toEntity(schoolRecord));
         });
 
         List<Award> awardList = awardRepository.findBySchoolRecordId(schoolRecordId);

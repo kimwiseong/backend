@@ -24,4 +24,14 @@ public class ReadingRequestDto {
                 .build();
     }
 
+    public Reading toEntity(SchoolRecord schoolRecord) {
+        return Reading.builder()
+                .schoolRecord(schoolRecord)
+                .grade(grade)
+                .subject(subject)
+                .title(title)
+                .semester(semester)
+                .build();
+    }
+
 }

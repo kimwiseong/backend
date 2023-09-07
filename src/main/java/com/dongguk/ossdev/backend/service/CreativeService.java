@@ -30,8 +30,7 @@ public class CreativeService {
                 .orElseThrow(() -> new IllegalArgumentException("생활기록부를 찾을 수 없습니다."));
 
         creativeRequestDtoList.stream().forEach(creativeRequestDto -> {
-            creativeRequestDto.toEntity().setSchoolRecord(schoolRecord);
-            creativeRepository.save(creativeRequestDto.toEntity());
+            creativeRepository.save(creativeRequestDto.toEntity(schoolRecord));
         });
 
         List<Creative> creativeList = creativeRepository.findBySchoolRecordId(schoolRecordId);

@@ -30,8 +30,7 @@ public class CareerService {
                 .orElseThrow(() -> new IllegalArgumentException("생활기록부를 찾을 수 없습니다."));
 
         careerRequestDtoList.stream().forEach(careerRequestDto -> {
-            careerRequestDto.toEntity().setSchoolRecord(schoolRecord);
-            careerRepository.save(careerRequestDto.toEntity());
+            careerRepository.save(careerRequestDto.toEntity(schoolRecord));
         });
 
         List<Career> careerList = careerRepository.findBySchoolRecordId(schoolRecordId);

@@ -1,5 +1,6 @@
 package com.dongguk.ossdev.backend.service;
 
+import com.dongguk.ossdev.backend.domain.Creative;
 import com.dongguk.ossdev.backend.domain.Educational;
 import com.dongguk.ossdev.backend.domain.SchoolRecord;
 import com.dongguk.ossdev.backend.dto.request.EducationalRequestDto;
@@ -19,26 +20,34 @@ public class EducationalService {
     private final SchoolRecordRepository schoolRecordRepository;
     private final EducationalRepository educationalRepository;
 
-    @Transactional
     public List<EducationalDto> create(Long schoolRecordId, List<EducationalRequestDto> createRequest) {
         SchoolRecord schoolRecord = schoolRecordRepository.findById(schoolRecordId)
                 .orElseThrow(() -> new IllegalArgumentException("생활기록부를 찾을 수 없습니다."));
 
-        if (!schoolRecord.getEducationalList().isEmpty()) {
-            throw new IllegalArgumentException("이미 생성된 교과학습 발달상황이 존재합니다.");
-        }
+//        if (!schoolRecord.getEducationalList().isEmpty()) {
+//            throw new IllegalArgumentException("이미 생성된 교과학습 발달상황이 존재합니다.");
+//        }
 
-        List<Educational> createEntityList = createRequest.stream()
-                .map(createEducational -> createEducational.toEntity(schoolRecord))
-                .collect(Collectors.toList());
+        createRequest.stream().forEach(educationalRequestDto -> {
+            educationalRepository.save(educationalRequestDto.toEntity(schoolRecord));
+        });
 
-        createEntityList.stream()
-                .map(saveEntity -> educationalRepository.save(saveEntity));
+        List<Educational> educationalList = educationalRepository.findBySchoolRecordId(schoolRecordId);
+        return EducationalDto.createEducationalDtoList(educationalList);
 
-        List<EducationalDto> createDtos = createEntityList.stream()
-                .map(educational -> EducationalDto.createEducationalDto(educational))
-                .collect(Collectors.toList());
-        return createDtos;
+//        if (creativeList.isEmpty()) {
+
+//        List<Educational> createEntityList = createRequest.stream()
+//                .map(createEducational -> createEducational.toEntity(schoolRecord))
+//                .collect(Collectors.toList());
+//
+//        createEntityList.stream()
+//                .map(saveEntity -> educationalRepository.save(saveEntity));
+//
+//        List<EducationalDto> createDtos = createEntityList.stream()
+//                .map(educational -> EducationalDto.createEducationalDto(educational))
+//                .collect(Collectors.toList());
+//        return createDtos;
     }
 
     public List<EducationalDto> read(Long schoolRecordId) {

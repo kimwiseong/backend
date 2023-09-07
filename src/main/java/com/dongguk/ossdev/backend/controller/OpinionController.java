@@ -4,6 +4,7 @@ import com.dongguk.ossdev.backend.dto.request.OpinionRequestDto;
 import com.dongguk.ossdev.backend.dto.response.OpinionDto;
 import com.dongguk.ossdev.backend.service.OpinionService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +13,14 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/school_record")
 public class OpinionController {
     private final OpinionService opinionService;
 
     @PostMapping("/opinion/{schoolRecordId}")
     public ResponseEntity<List<OpinionDto>> create(@PathVariable Long schoolRecordId, @RequestBody List<OpinionRequestDto> createRequest) {
+        log.info("con");
         List<OpinionDto> createdDto = opinionService.create(schoolRecordId, createRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
     }

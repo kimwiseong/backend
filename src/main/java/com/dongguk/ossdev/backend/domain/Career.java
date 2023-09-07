@@ -26,7 +26,7 @@ public class Career extends BaseTimeEntity {
 
     private String parentHope;
 
-    @Lob
+    @Column(length = 2000)
     private String reason;
 
     // ========= mapping =========

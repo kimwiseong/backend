@@ -19,10 +19,12 @@ public class Qna extends BaseTimeEntity {
     @Column(name = "qna_id")
     private Long id;
 
-    @Lob
+    //@Lob
+    @Column(length = 3000)
     private String question;
 
-    @Lob
+    //@Lob
+    @Column(length = 2000)
     private String answer;
 
     // ========= mapping =========

@@ -24,7 +24,8 @@ public class Creative extends BaseTimeEntity {
 
     private int activityTime;
 
-    @Lob
+    //@Lob
+    @Column(length = 2000)
     private String specialty;
 
     // ========= mapping =========

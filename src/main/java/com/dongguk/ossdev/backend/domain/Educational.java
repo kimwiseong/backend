@@ -29,7 +29,8 @@ public class Educational extends BaseTimeEntity {
     @Column(name = "ranking")
     private int rank;
 
-    @Lob
+    // @Lob
+    @Column(length = 2000)
     private String detailAndSpecialty;
 
     // ========= mapping =========

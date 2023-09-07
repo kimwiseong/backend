@@ -20,7 +20,8 @@ public class Opinion extends BaseTimeEntity {
 
     private int grade;
 
-    @Lob
+    //@Lob
+    @Column(length = 2000)
     private String content;
 
     // ========= mapping =========

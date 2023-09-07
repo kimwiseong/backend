@@ -13,7 +13,7 @@ public class CommonQuestion extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
+    @Column(length = 2000)
     private String question;
 
     private Boolean isUsed;

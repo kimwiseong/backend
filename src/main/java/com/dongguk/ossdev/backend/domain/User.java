@@ -87,4 +87,8 @@ public class User extends BaseTimeEntity {
     public void delete() {
         this.isValid = false;
     }
+
+    public void logout() {
+        this.isLogin = false;
+    }
 }

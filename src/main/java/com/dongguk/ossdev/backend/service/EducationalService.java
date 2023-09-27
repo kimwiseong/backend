@@ -24,30 +24,12 @@ public class EducationalService {
         SchoolRecord schoolRecord = schoolRecordRepository.findById(schoolRecordId)
                 .orElseThrow(() -> new IllegalArgumentException("생활기록부를 찾을 수 없습니다."));
 
-//        if (!schoolRecord.getEducationalList().isEmpty()) {
-//            throw new IllegalArgumentException("이미 생성된 교과학습 발달상황이 존재합니다.");
-//        }
-
         createRequest.stream().forEach(educationalRequestDto -> {
             educationalRepository.save(educationalRequestDto.toEntity(schoolRecord));
         });
 
         List<Educational> educationalList = educationalRepository.findBySchoolRecordId(schoolRecordId);
         return EducationalDto.createEducationalDtoList(educationalList);
-
-//        if (creativeList.isEmpty()) {
-
-//        List<Educational> createEntityList = createRequest.stream()
-//                .map(createEducational -> createEducational.toEntity(schoolRecord))
-//                .collect(Collectors.toList());
-//
-//        createEntityList.stream()
-//                .map(saveEntity -> educationalRepository.save(saveEntity));
-//
-//        List<EducationalDto> createDtos = createEntityList.stream()
-//                .map(educational -> EducationalDto.createEducationalDto(educational))
-//                .collect(Collectors.toList());
-//        return createDtos;
     }
 
     public List<EducationalDto> read(Long schoolRecordId) {

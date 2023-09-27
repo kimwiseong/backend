@@ -14,25 +14,15 @@ public class AwardRequestDto {
     private final String target;  // 참가 대상
 
     public Award toEntity(SchoolRecord schoolRecord) {
-        return Award.builder()
-                .schoolRecord(schoolRecord)
+        Award award = Award.builder()
                 .name(name)
                 .tier(tier)
                 .date(date)
                 .institution(institution)
                 .target(target)
                 .build();
-    }
-
-    public Award toEntity() {
-        return Award.builder()
-//                .schoolRecord(schoolRecord)
-                .name(name)
-                .tier(tier)
-                .date(date)
-                .institution(institution)
-                .target(target)
-                .build();
+        award.setSchoolRecord(schoolRecord);
+        return award;
     }
 
 }

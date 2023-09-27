@@ -26,28 +26,12 @@ public class ReadingService {
         SchoolRecord schoolRecord = schoolRecordRepository.findById(schoolRecordId)
                 .orElseThrow(() -> new IllegalArgumentException("생활기록부를 찾을 수 없습니다."));
 
-//        if (!schoolRecord.getEducationalList().isEmpty()) {
-//            throw new IllegalArgumentException("이미 생성된 독서 활동상황이 존재합니다.");
-//        }
-
         createRequest.stream().forEach(readingRequestDto -> {
             readingRepository.save(readingRequestDto.toEntity(schoolRecord));
         });
 
         List<Reading> readingList = readingRepository.findBySchoolRecordId(schoolRecordId);
         return ReadingDto.createReadingDtoList(readingList);
-
-//        List<Reading> createEntityList = createRequest.stream()
-//                .map(createReading -> createReading.toEntity())
-//                .collect(Collectors.toList());
-//
-//        createEntityList.stream()
-//                .map(saveEntity -> readingRepository.save(saveEntity));
-//
-//        List<ReadingDto> createDtos = createEntityList.stream()
-//                .map(reading -> ReadingDto.createReadingDto(reading))
-//                .collect(Collectors.toList());
-//        return createDtos;
     }
 
     public List<ReadingDto> read(Long schoolRecordId) {

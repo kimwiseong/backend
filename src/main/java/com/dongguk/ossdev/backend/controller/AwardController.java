@@ -22,7 +22,6 @@ public class AwardController {
     @PostMapping("/award/{schoolRecordId}")
     public ResponseEntity<List<AwardDto>> create(@PathVariable Long schoolRecordId,
                                                  @RequestBody List<AwardRequestDto> requestDtoList) {
-        log.info("award create controller");
         List<AwardDto> awardDtoList = awardService.create(schoolRecordId, requestDtoList);
         return ResponseEntity.status(HttpStatus.CREATED).body(awardDtoList);
     }

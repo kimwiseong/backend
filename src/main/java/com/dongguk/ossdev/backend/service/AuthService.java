@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -72,11 +73,10 @@ public class AuthService {
         // User Data 존재 여부 확인
         if (socialId == null) { throw new RuntimeException("NOT_FOUND_USER"); }
 
-        // TODO 닉네임
         if (socialName == null) {
             Random random = new Random();
 
-            socialName = loginProviderType.toString() + "-";
+            socialName = loginProviderType + "-";
             for (int i = 0; i < 3; i++) {
                 socialName += String.format("%04d", random.nextInt(1000));
             }
@@ -107,8 +107,15 @@ public class AuthService {
                 .build();
     }
 
+    @Transactional
+    public void logout(Long userId) {
+        User user = userRepository.findByIdAndIsLoginAndRefreshTokenIsNotNull(userId, true)
+                .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
+
+        user.logout();
+    }
+
     public void sendRedirectToFront(HttpServletResponse response, JwtToken jwtToken) throws IOException {
-        // TODO front url 변경
         final String FRONT_URL = "http://localhost:3000/main";
 
         final Cookie refreshTokenSecureCookie = new Cookie("refreshToken", jwtToken.getRefreshToken());

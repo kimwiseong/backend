@@ -20,7 +20,6 @@ public class OpinionController {
 
     @PostMapping("/opinion/{schoolRecordId}")
     public ResponseEntity<List<OpinionDto>> create(@PathVariable Long schoolRecordId, @RequestBody List<OpinionRequestDto> createRequest) {
-        log.info("con");
         List<OpinionDto> createdDto = opinionService.create(schoolRecordId, createRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
     }

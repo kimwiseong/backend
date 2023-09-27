@@ -28,30 +28,12 @@ public class OpinionService {
         SchoolRecord schoolRecord = schoolRecordRepository.findById(schoolRecordId)
                 .orElseThrow(() -> new IllegalArgumentException("생활기록부를 찾을 수 없습니다."));
 
-//        if (!schoolRecord.getOpinionList().isEmpty()) {
-//            throw new IllegalArgumentException("이미 생성된 행동특성 및 종합의견이 존재합니다.");
-//        }
-
-        log.info("service");
         createRequest.stream().forEach(opinionRequestDto -> {
             opinionRepository.save(opinionRequestDto.toEntity(schoolRecord));
         });
 
         List<Opinion> opinionList = opinionRepository.findBySchoolRecordId(schoolRecordId);
         return OpinionDto.createOpinionDtoList(opinionList);
-
-//        return EducationalDto.createEducationalDtoList(opinionList);
-//        List<Opinion> createEntityList = createRequest.stream()
-//                .map(createOpinion -> createOpinion.toEntity())
-//                .collect(Collectors.toList());
-//
-//        createEntityList.stream()
-//                .map(saveEntity -> opinionRepository.save(saveEntity));
-//
-//        List<OpinionDto> createDtos = createEntityList.stream()
-//                .map(opinion -> OpinionDto.createOpinionDto(opinion))
-//                .collect(Collectors.toList());
-//        return createDtos;
     }
 
     public List<OpinionDto> read(Long schoolRecordId) {

@@ -15,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -34,19 +36,26 @@ public class SecurityConfig {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
-    protected SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+    protected SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
         return httpSecurity
-                .cors(cors -> cors.disable())
+                .cors(cors -> cors.configure(httpSecurity))
                 .csrf(CsrfConfigurer::disable)
                 .httpBasic(HttpBasicConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry.anyRequest().permitAll())
+                .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
+                        .requestMatchers(new AntPathRequestMatcher("/auth/kakao")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/auth/kakao/callback")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/auth/naver")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/auth/naver/callback")).permitAll()
+                        .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception
                     .authenticationEntryPoint(jwtEntryPoint)
                     .accessDeniedHandler(jwtAccessDeniedHandler))
 
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, customUserDetailService), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
+
                 .getOrBuild();
     }
 
